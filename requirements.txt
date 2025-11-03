@@ -1,7 +1,9 @@
-langchain==0.0.146
+langchain
 crfm-helm
 scipy
 seaborn
 matplotlib
 pandas
 pydantic
+openai
+langchain_openai

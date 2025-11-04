@@ -1,3 +1,7 @@
+#### Mind in the Machine Team Notes:
+Create a .env file in the root directory with the following content with your open ai key assigned to the variable OPENAI_API_KEY.
+
+
 ##  
 
 A Domain-Agnostic Method for Procedurally Generating LLM Evaluations

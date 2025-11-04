@@ -11,5 +11,7 @@ find . -size +100M | cat >> .gitignore
 # ignore all __pycache__ folders
 __pycache__/
 
+.env*
+
 .venv/
 .python-version

@@ -2,11 +2,14 @@ import random
 import csv
 import tqdm
 import argparse
+import dotenv
 
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
 
 from utils import push_data, get_num_items, get_vars_from_out
+
+dotenv.load_dotenv()
 
 letters = [
     "A",
@@ -20,7 +23,8 @@ letters = [
     "I",
     "J",
     "K",
-    "L" "M",
+    "L",
+    "M",
     "N",
     "O",
     "P",

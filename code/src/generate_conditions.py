@@ -66,7 +66,9 @@ def generate_conditions(completions):
                         story = story_parts[0] + "." + story_parts[1] + "." + story_parts[2] + "." +  story_parts[3] + "." + story_parts[4] + "."
                         story_parts = story.split(".")
                         story_control = ".".join(story_parts[:4] + [" " + dict_var["Random Event"]])
-
+                        
+                
+                # Need to create an alternative story generation file to bigtom.py for generate_conditions.py to get the right components to build properly
 
                 # Level 1 Reasoning: Causes of action are directly directly stated 
                 elif variable == "level_1":
@@ -114,7 +116,31 @@ def generate_conditions(completions):
                         story = story_parts[0] + "." + story_parts[1] + "." + story_parts[2] + "." +  story_parts[3] + "." + story_parts[4] + "."
                         story_parts = story.split(".")
                         story_control = ".".join(story_parts[:4] + [" " + dict_var["Random Event"]])
+                        
+                # Level 3 Reasoning: The LLM needs to make inferences beyond the text
+                # Changes from Level 2:
+                #  - Remove the 'Causal Event' from the story construction (last sentence)
+                #  - The answer will be open response and should describe something similar to the causal event which was removed
+                elif variable == "level_3":
+                    question = dict_var["Reasoning Question"]
+                    actions = [dict_var["Action aware"], dict_var["Action not aware"]]
+                    awareness_random = [dict_var["Aware of random event"], dict_var["Not aware of random event"]]
 
+                    story_parts = dict_var["Story"].split(".")
+                    
+                    answers = [story_parts[4].strip(), "An incorrect answer."] # Figure out how to do this later
+
+                    # If initial belief is 0 (not present), remove the sentence in the story that indicates the character's belief
+                    if init_belief == 0:
+                        story = story_parts[0] + "." + story_parts[1] + "." + story_parts[2] + "."
+                        story_parts = story.split(".")
+                        story_control = ".".join(story_parts[:3] + [" " + dict_var["Random Event"]])
+
+                    # If initial belief is 1 (present), keep all sentences in the story
+                    elif init_belief == 1:
+                        story = story_parts[0] + "." + story_parts[1] + "." + story_parts[2] + "." + story_parts[3] + "."
+                        story_parts = story.split(".")
+                        story_control = ".".join(story_parts[:4] + [" " + dict_var["Random Event"]])
 
 
                 # Loop for each condition
@@ -154,8 +180,11 @@ def generate_conditions(completions):
                                 # Story + Action aware + Question + Percept Answer Aware + Percept Answer not Aware
                                 elif variable == "level_2":
                                     writer.writerow([f"{story} {actions[0]}", question, answers[0], answers[1]])
-                                else:
-                                    writer.writerow([f"{story} {awareness[0]}", question, answers[0], answers[1]])
+                                # True Belief Level 3
+                                # Story - Causal Event + Question + Open Answer (Correct) + Open Answer (Incorrect)
+                                elif variable == "level_3":
+                                    writer.writerow([f"{story}", question, answers[0], answers[1]])
+
 
                             elif condition == "false_belief":
                                 if variable == "backward_desire":
@@ -170,8 +199,10 @@ def generate_conditions(completions):
                                 # story + Not Aware of event + Question + Percept Answer Aware + Percept Answer not Aware 
                                 elif variable == "level_2":
                                     writer.writerow([f"{story} {actions[1]}", question, answers[1], answers[0]])
-                                else:
-                                    writer.writerow([f"{story} {awareness[1]}", question, answers[1], answers[0]])
+                                # False Belief Level 3
+                                # Story - Causal Event + Question + Open Answer (Correct) + Open Answer (Incorrect)
+                                elif variable == "level_3":
+                                    writer.writerow([f"{story}", question, answers[1], answers[0]])
 
                             elif condition == "true_control":
                                 if variable == "backward_desire":

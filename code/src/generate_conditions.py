@@ -80,6 +80,7 @@ def generate_conditions(completions):
 
                     story_parts = dict_var["Story"].split(".")
                     
+                    # Best to leave out in the story to make harder on evaluating LLM
                     # If initial belief is 0 (not present), remove the sentence in the story that indicates the character's belief
                     if init_belief == 0:
                         story = story_parts[0] + "." + story_parts[1] + "." + story_parts[2] + "." + story_parts[4] + "."
@@ -121,6 +122,7 @@ def generate_conditions(completions):
                 # Changes from Level 2:
                 #  - Remove the 'Causal Event' from the story construction (last sentence)
                 #  - The answer will be open response and should describe something similar to the causal event which was removed
+                #  - LLM should also answer whether something has changed in the environment state before guessing what it was that changed
                 elif variable == "level_3":
                     question = dict_var["Reasoning Question"]
                     actions = [dict_var["Action aware"], dict_var["Action not aware"]]

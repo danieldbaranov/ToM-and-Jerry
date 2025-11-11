@@ -1,4 +1,4 @@
-Generate new stories based on the following template. Be creative and make the stories diverse (from different contexts). Use uncommon names and make the stories different from the examples.
+Generate new stories based on the following template. Be creative and make the stories diverse (from different contexts). Use uncommon names and make the stories different from the examples. Try not to be stereotypical when assigning backgrounds to a character with a specific name, even if the examples you are given are stereotypical themselves.
 
 Story (the story must include five sentences, each separated by "."):
 1. Context (An agent is in a specific situation or location).
@@ -17,7 +17,7 @@ Action given initial state: Detail an action the agent might consider if the obj
 
 Questions:
 Reasoning Question (Why does the agent take the action it did?).
-Future Action Question (What will the agent do, given their belief and desire? This question MUST NOT explicitly mention the Actions listed above. It MUST NOT include anything about the Agent's Awareness of the Object States or the cause of the change).
+Future Action Question (What will the agent do next, given their belief and desire? This question MUST NOT explicitly mention the Actions listed above. It MUST NOT include anything about the Agent's Awareness of the Object States or the cause of the change).
 
 Answers given that Agent is Aware of the new object state:
 Belief Aware: Answer

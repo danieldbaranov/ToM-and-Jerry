@@ -1,6 +1,13 @@
 #### Mind in the Machine Team Notes:
 Create a .env file in the root directory with the following content with your open ai key assigned to the variable OPENAI_API_KEY.
 
+Checklist for changing the shape of the dataset (test.csv):
+* Update `response_template` variable in `code/src/test.py` to include/exclude desired fields.
+* Update `template_var` variable in `code/src/test.py` to include/exclude desired fields.
+* Update `list_var` variable in `code/src/test.py` to include/exclude desired fields.
+* Update the prompt file at `code/prompt_instructions/test.txt` to include/exclude desired fields. Be verbose and follow the format of existing fields.
+* The most tedious part: Because the generation of new data requires looking at examples (which come from the existing data), you must update the data in `test.csv` to include/exclude desired fields. It must match exactly the order in `list_var` in `code/src/test.py`. You can do this manually or paste the data into an LLM or something and explicitly describe the changes you want.
+
 
 ##  
 

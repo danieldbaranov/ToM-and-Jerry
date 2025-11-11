@@ -8,6 +8,21 @@ Checklist for changing the shape of the dataset (test.csv):
 * Update the prompt file at `code/prompt_instructions/test.txt` to include/exclude desired fields. Be verbose and follow the format of existing fields.
 * The most tedious part: Because the generation of new data requires looking at examples (which come from the existing data), you must update the data in `test.csv` to include/exclude desired fields. It must match exactly the order in `list_var` in `code/src/test.py`. You can do this manually or paste the data into an LLM or something and explicitly describe the changes you want.
 
+Preliminary Data Fields for Tom and Jerry:
+1. Story
+2. Aware of event
+3. Not aware of event
+4. Action given new state
+5. Action given initial state
+6. Reasoning Question
+7. Future Action Question (not used yet)
+8. Belief Explicit Action Aware (for level 1 reasoning)
+9. Percept Implicit Action Aware (for level 2 reasoning)
+10. Belief Explicit Action Not Aware
+11. Percept Implicit Action Not Aware
+12. Random Event
+13. Aware of random event
+14. Not aware of random event
 
 ##  
 

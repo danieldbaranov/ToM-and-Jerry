@@ -5,6 +5,7 @@ DATA_DIR = '../../data'
 CONDITION_DIR = os.path.join(DATA_DIR, 'conditions')
 CSV_NAME = os.path.join(DATA_DIR, 'bigtom/bigtom.csv')
 INITIAL_BELIEF = [0, 1] # 0 hide initial belief, 1 show initial belief
+#! TODO: Delete one of the VARIABLES lists
 VARIABLES = ['forward_belief', 'forward_action', 'backward_belief', 'percept_to_belief']
 VARIABLES = ['level_1', 'level_2', 'level_3', 'percept_to_belief']
 
@@ -21,9 +22,10 @@ def generate_conditions(completions):
                 "Belief Answer Aware", "Percept Answer Aware", "Action Answer Aware", "Belief Answer not Aware",
                 "Percept Answer not Aware", "Action Answer not Aware", "Random Event", "Aware of random event", "Not aware of random event"]
 
+
     for completion_idx, completion in enumerate(completions):
 
-        # Create a dictionary mapping the different parts of the scenario, to their values in the LLM generated output
+        # Create a dictionary mapping the different parts of the scenario, to their values in the LLM generated output (csv row)
         # Looks like: {'Story': 'Noor is working as a ...', 'Aware of event': 'Noor sees her coworker ...', ...}
         dict_var = {list_var[i]: completion[i] for i in range(len(list_var))}
         
@@ -45,7 +47,7 @@ def generate_conditions(completions):
                     if init_belief == 1:
                         story = story_parts[0] + "." + story_parts[1] + "." + story_parts[2] + "." 
 
-
+                #! TODO: Delete backward_belief
                 elif variable == "backward_belief":
                     question = dict_var["Belief Question"]
                     answers = [dict_var["Belief Answer Aware"], dict_var["Belief Answer not Aware"]]

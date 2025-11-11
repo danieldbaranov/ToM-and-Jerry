@@ -3,6 +3,7 @@ import csv
 import tqdm
 import argparse
 import dotenv
+import os
 
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
@@ -138,12 +139,25 @@ Not aware of random event: {not_aware_of_random_event}"""
             print(
                 f"Reading examples from {csv_file} with existing {get_num_items(csv_file)} examples"
             )
-        # read a few examples from the csv file
-        with open(csv_file, "r") as f:
-            for line in f.readlines():
-                params = line.split(";")
-                example = {k: params[v].strip() for v, k in enumerate(template_var)}
-                examples.append(example)
+        # read a few examples from the csv file (use csv.reader and guard against malformed/empty lines)
+        try:
+            with open(csv_file, "r", newline="") as f:
+                reader = csv.reader(f, delimiter=";")
+                for params in reader:
+                    # skip empty rows
+                    if not any([p.strip() for p in params]):
+                        continue
+                    if len(params) < len(template_var):
+                        if args.verbose:
+                            print(
+                                f"Skipping malformed example (expected {len(template_var)} fields, got {len(params)}): {params}"
+                            )
+                        continue
+                    example = {k: params[v].strip() for v, k in enumerate(template_var)}
+                    examples.append(example)
+        except FileNotFoundError:
+            if args.verbose:
+                print(f"CSV file not found: {csv_file} - continuing with no seed examples")
         random.shuffle(examples)
 
         # 3-shots by default
@@ -195,11 +209,57 @@ Not aware of random event: {not_aware_of_random_event}"""
             out_vars = get_vars_from_out(generation.text, list_var)
             data = [out_vars[k] for k in list_var]
             data += ["auto", 0]
-            # write to csv file
+            # write to csv file (sanitize embedded newlines and use newline='' on open)
             story_file = f"{DATA_DIR}/{CSV_DIR}/{CSV_NAME}"
-            with open(story_file, "a") as csvfile:
-                writer = csv.writer(csvfile, delimiter=";")
-                writer.writerow(data)
+            # sanitize fields to avoid embedded newlines in CSV fields (which create multi-line records)
+            data_sanitized = [d.replace("\r", " ").replace("\n", " ") if isinstance(d, str) else d for d in data]
+            # ensure parent directory exists
+            os.makedirs(os.path.dirname(story_file), exist_ok=True)
+            # if file exists, normalize trailing newlines so there is exactly one newline between entries
+            need_prepend_newline = False
+            if os.path.exists(story_file):
+                try:
+                    with open(story_file, 'rb+') as fb:
+                        fb.seek(0, os.SEEK_END)
+                        size = fb.tell()
+                        if size == 0:
+                            # empty file -- no newline needed
+                            need_prepend_newline = False
+                        else:
+                            # check last byte
+                            fb.seek(size - 1)
+                            last = fb.read(1)
+                            if last not in (b'\n', b'\r'):
+                                # file ends with non-newline; we need to prepend a newline before appending
+                                need_prepend_newline = True
+                            else:
+                                # file has one or more trailing newlines; truncate to a single newline after last content
+                                pos = size - 1
+                                while pos >= 0:
+                                    fb.seek(pos)
+                                    b = fb.read(1)
+                                    if b not in (b'\n', b'\r'):
+                                        break
+                                    pos -= 1
+                                if pos == -1:
+                                    # file contains only newlines -> truncate to empty
+                                    fb.truncate(0)
+                                else:
+                                    # desired length = position of last non-newline + 1 (keep that char) + 1 newline
+                                    desired_len = pos + 2
+                                    if desired_len < size:
+                                        fb.truncate(desired_len)
+                                need_prepend_newline = False
+                except OSError:
+                    # if any error reading/truncating file, fall back to appending with a newline
+                    need_prepend_newline = True
+
+            with open(story_file, "a", newline="") as csvfile:
+                # if the existing file didn't end with a newline, write one so the new row starts on a fresh line
+                if need_prepend_newline and csvfile.tell() > 0:
+                    csvfile.write("\n")
+                writer = csv.writer(csvfile, delimiter=";", lineterminator="\n")
+                writer.writerow(data_sanitized)
     # push to github
     # push_data(DATA_DIR, REPO_URL)
 

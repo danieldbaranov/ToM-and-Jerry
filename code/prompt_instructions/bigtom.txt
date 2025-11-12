@@ -16,8 +16,6 @@ Action given new state: Articulate an action that the agent anticipates performi
 Action given initial state: Detail an action the agent might consider if the object were to persist in its original state. This action must not insinuate a shift in the object's state, but should highlight the agent's intention to execute an action in the future or react to the perceived state of the object, without leading to a direct state change.
 
 Questions:
-Reasoning Question (Why does the agent take the action it did?).
-
 Belief Question (What belief does the agent have about the state of the object? This question must always include the initial and final state of the object mentioned in the story but it MUST NOT mention the cause of the change).
 Desire Question (What does the agent want, given their belief and actions? This question must always include the initial and final state of the object mentioned in the story but it MUST NOT mention the cause of the change).
 Action Question (What will the agent do, given their belief and desire? This question MUST NOT explicitly mention the Actions listed above. It MUST NOT include anything about the Agent's Awareness of the Object States or the cause of the change).

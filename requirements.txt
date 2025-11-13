@@ -8,3 +8,4 @@ pydantic
 openai
 langchain_openai
 python-dotenv
+vllm

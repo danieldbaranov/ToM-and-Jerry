@@ -4,11 +4,11 @@
 #SBATCH --mem=32g
 #SBATCH -J "ToM and Jerry"
 #SBATCH -p short
-#SBATCH -t 12:00:00
+#SBATCH -t 0:30:00
 #SBATCH --gres=gpu:1
 #SBATCH -C "A100|V100"
-#SBATCH -o slurm-%j.out
-#SBATCH -e slurm-%j.err                
+#SBATCH -o logs/slurm-%j.out
+#SBATCH -e logs/slurm-%j.err                
 
 echo "[SLURM] Node: $HOSTNAME"
 
@@ -44,7 +44,7 @@ echo "[SLURM] vLLM is ready."
 
 echo "[SLURM] Running python script..."
 cd code/src
-python bigtom.py --model meta-llama/Llama-3.1-8B-Instruct
+python test.py --model meta-llama/Llama-3.1-8B-Instruct
 
 echo "[SLURM] Stopping vLLM server..."
 kill $VLLM_PID

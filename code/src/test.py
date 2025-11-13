@@ -63,13 +63,26 @@ parser.add_argument("--verbose", action="store_true", help="verbose")
 
 
 def get_llm(args):
-    llm = ChatOpenAI(
+    if args.model == "gpt-4":
+        print(f"Using: OpenAI Platform - {args.model}")
+        llm = ChatOpenAI(
         model=args.model,
         temperature=args.temperature,
         max_tokens=args.max_tokens,
         n=args.num_completions,
-        request_timeout=180,
+        request_timeout=180
     )
+    else:
+        print(f"Using: vLLM - {args.model}")
+        llm = ChatOpenAI(
+            model=args.model,
+            temperature=args.temperature,
+            max_tokens=args.max_tokens,
+            n=args.num_completions,
+            request_timeout=180,
+            openai_api_base="http://localhost:8000/v1",
+            openai_api_key="test",
+        )
     return llm
 
 

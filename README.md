@@ -9,24 +9,22 @@ Checklist for changing the shape of the dataset (test.csv):
 * The most tedious part: Because the generation of new data requires looking at examples (which come from the existing data), you must update the data in `test.csv` to include/exclude desired fields. It must match exactly the order in `list_var` in `code/src/test.py`. You can do this manually or paste the data into an LLM or something and explicitly describe the changes you want.
 
 Preliminary Data Fields for Tom and Jerry:
-*Will need to add some field(s) later for level 3 reasoning and future action question answers
-1. Story
-2. Aware of event
-3. Not aware of event
+*Will need to add some field(s) later for future action question answers
+1. Story (Causal Event portion will double as the answer for level 3 reasoning question)
+2. Aware of event (Doubles as the answer for level 2 reasoning question, Percept Implicit Aware)
+3. Not aware of event (Doubles as the answer for level 2 reasoning question, Percept Implicit Not Aware)
 4. Action given new state
 5. Action given initial state
-6. Reasoning Question
-7. State Change Question
+6. Reasoning Question (for level 1, 2, and 3 reasoning)
+7. State Change Question (initial question for level 3 reasoning)
 8. Future Action Question (not used yet)
-9. Belief Explicit Action Aware (for level 1 reasoning)
-10. Percept Implicit Action Aware (for level 2 reasoning)
-11. State Implicit Action Aware (for level 3 reasoning, this only answers if something in the environment changed)
-12. Belief Explicit Action Not Aware
-13. Percept Implicit Action Not Aware
-14. State Implicit Action Not Aware
-15. Random Event
-16. Aware of random event
-17. Not aware of random event
+9. Belief Explicit Aware (for level 1 reasoning)
+10. State Implicit Aware (for level 3 reasoning, this only answers if something in the environment changed)
+11. Belief Explicit Not Aware
+12. State Implicit Not Aware
+13. Random Event
+14. Aware of random event
+15. Not aware of random event
 
 ##  
 

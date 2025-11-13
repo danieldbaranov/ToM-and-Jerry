@@ -9,6 +9,7 @@ Checklist for changing the shape of the dataset (test.csv):
 * The most tedious part: Because the generation of new data requires looking at examples (which come from the existing data), you must update the data in `test.csv` to include/exclude desired fields. It must match exactly the order in `list_var` in `code/src/test.py`. You can do this manually or paste the data into an LLM or something and explicitly describe the changes you want.
 
 Preliminary Data Fields for Tom and Jerry:
+*Will need to add some field(s) later for level 3 reasoning and future action question answers
 1. Story
 2. Aware of event
 3. Not aware of event

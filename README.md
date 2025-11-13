@@ -15,14 +15,17 @@ Preliminary Data Fields for Tom and Jerry:
 4. Action given new state
 5. Action given initial state
 6. Reasoning Question
-7. Future Action Question (not used yet)
-8. Belief Explicit Action Aware (for level 1 reasoning)
-9. Percept Implicit Action Aware (for level 2 reasoning)
-10. Belief Explicit Action Not Aware
-11. Percept Implicit Action Not Aware
-12. Random Event
-13. Aware of random event
-14. Not aware of random event
+7. State Change Question
+8. Future Action Question (not used yet)
+9. Belief Explicit Action Aware (for level 1 reasoning)
+10. Percept Implicit Action Aware (for level 2 reasoning)
+11. State Implicit Action Aware (for level 3 reasoning, this only answers if something in the environment changed)
+12. Belief Explicit Action Not Aware
+13. Percept Implicit Action Not Aware
+14. State Implicit Action Not Aware
+15. Random Event
+16. Aware of random event
+17. Not aware of random event
 
 ##  
 

@@ -2,14 +2,13 @@
 Create a .env file in the root directory with the following content with your open ai key assigned to the variable OPENAI_API_KEY.
 
 Checklist for changing the shape of the dataset (test.csv):
-* Update `response_template` variable in `code/src/test.py` to include/exclude desired fields.
-* Update `template_var` variable in `code/src/test.py` to include/exclude desired fields.
-* Update `list_var` variable in `code/src/test.py` to include/exclude desired fields.
-* Update the prompt file at `code/prompt_instructions/test.txt` to include/exclude desired fields. Be verbose and follow the format of existing fields.
-* The most tedious part: Because the generation of new data requires looking at examples (which come from the existing data), you must update the data in `test.csv` to include/exclude desired fields. It must match exactly the order in `list_var` in `code/src/test.py`. You can do this manually or paste the data into an LLM or something and explicitly describe the changes you want.
+* Update `response_template` variable in `code/src/tomandjerry.py` to include/exclude desired fields.
+* Update `template_var` variable in `code/src/tomandjerry.py` to include/exclude desired fields.
+* Update `list_var` variable in `code/src/tomandjerry.py` to include/exclude desired fields.
+* Update the prompt file at `code/prompt_instructions/tomandjerry.txt` to include/exclude desired fields. Be verbose and follow the format of existing fields.
+* The most tedious part: Because the generation of new data requires looking at examples (which come from the existing data), you must update the data in `tomandjerry.csv` to include/exclude desired fields. It must match exactly the order in `list_var` in `code/src/tomandjerry.py`. You can do this manually or paste the data into an LLM or something and explicitly describe the changes you want.
 
 Preliminary Data Fields for Tom and Jerry:
-*Will need to add some field(s) later for future action question answers
 1. Story (Causal Event portion will double as the answer for level 3 reasoning question)
 2. Aware of event (Doubles as the answer for level 2 reasoning question, Percept Implicit Aware)
 3. Not aware of event (Doubles as the answer for level 2 reasoning question, Percept Implicit Not Aware)
@@ -17,14 +16,17 @@ Preliminary Data Fields for Tom and Jerry:
 5. Action given initial state
 6. Reasoning Question (for level 1, 2, and 3 reasoning)
 7. State Change Question (initial question for level 3 reasoning)
-8. Future Action Question (not used yet)
+8. Forward Action Question (not used yet)
 9. Belief Explicit Aware (for level 1 reasoning)
 10. State Implicit Aware (for level 3 reasoning, this only answers if something in the environment changed)
-11. Belief Explicit Not Aware
-12. State Implicit Not Aware
-13. Random Event
-14. Aware of random event
-15. Not aware of random event
+11. Action Implicit Aware (for implicit forward action, nothing observed, all inferred)
+12. Belief Explicit Not Aware
+13. State Implicit Not Aware
+14. Action Implicit Not Aware
+15. Supplemental Event (observation required to inform forward action when percepts and beliefs are not observable after the causal event)
+16. Random Event
+17. Aware of random event
+18. Not aware of random event
 
 ##  
 
